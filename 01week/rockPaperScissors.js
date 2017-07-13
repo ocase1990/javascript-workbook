@@ -7,19 +7,68 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-
-function rockPaperScissors(hand1, hand2) {
-
-  // Write code here
-
+function rockPaperScissors (hand1, hand2) {
+  hand1 = hand1.toLowerCase().trim();
+  hand2 = hand2.toLowerCase().trim();
+  if (hand1 === hand2) {
+    return "It's a tie!";
+  } else {
+    if (((hand1 === 'rock') && (hand2 === 'paper')) ||
+    ((hand1 === 'paper') && (hand2 === 'scissors')) ||
+    ((hand1 === 'scissors') && (hand2 === 'rock'))) {
+      return 'Hand two wins!';
+    } else {
+      return 'Hand one wins!';
+    }
+  }
 }
 
-function getPrompt() {
+/*
+  switch (hand1) {
+    case 'rock':
+      if (hand2 === 'paper') {
+        return 'Hand two wins!';
+      } else if (hand2 === 'scissors') {
+        return 'Hand one wins!';
+      } else {
+        return "It's a tie!";
+      }
+      break;
+    case 'paper':
+      if (hand2 === 'scissors') {
+        return 'Hand two wins!';
+      } else if (hand2 === 'rock') {
+        return 'Hand one wins!';
+      } else {
+        return "It's a tie!";
+      }
+      break;
+    case 'scissors':
+      if (hand2 === 'rock') {
+        return 'Hand two wins!';
+      } else if (hand2 === 'paper') {
+        return 'Hand one wins!';
+      } else {
+        return "It's a tie!";
+      }
+        break;
+  }
+}
+*/
+function getPrompt () {
   rl.question('hand1: ', (answer1) => {
-    rl.question('hand2: ', (answer2) => {
-      console.log( rockPaperScissors(answer1, answer2) );
-      getPrompt();
-    });
+    let compAnswer = Math.random();
+    let answer2;
+    if (compAnswer < 0.33) {
+      answer2 = 'rock';
+    } else if (compAnswer > 0.66) {
+      answer2 = 'paper';
+    } else {
+      answer2 = 'scissors';
+    }
+    console.log('hand2: ' + answer2);
+    console.log(rockPaperScissors(answer1, answer2));
+    getPrompt();
   });
 }
 
