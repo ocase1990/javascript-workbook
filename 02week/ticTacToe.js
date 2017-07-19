@@ -12,6 +12,7 @@ let board = [
   [' ', ' ', ' ']
 ];
 
+
 let playerTurn = 'X';
 
 function printBoard() {
@@ -22,26 +23,74 @@ function printBoard() {
   console.log('  ---------');
   console.log('2 ' + board[2].join(' | '));
 }
+function clearBoard() {
+  board = [
+    [' ', ' ', ' '],
+    [' ', ' ', ' '],
+    [' ', ' ', ' ']
+  ];
+}
 
 function horizontalWin() {
-  // Your code here
+  if ((board[0] === ['X', 'X', 'X']) || (board[0] === ['O', 'O', 'O'])) {
+    return true;
+  } else if ((board[1] === ['X', 'X', 'X']) || (board[1] === ['O', 'O', 'O'])) {
+    return true;
+  } else if ((board[2] === ['X', 'X', 'X']) || (board[2] === ['O', 'O', 'O'])) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function verticalWin() {
-  // Your code here
+  if ((board[0][0] + board [0][1] + board[0][2] === 'XXX') || (board[0][0] + board [0][1] + board[0][2] === 'OOO')) {
+    return true;
+  } else if ((board[1][0] + board [1][1] + board[1][2] === 'XXX') || (board[1][0] + board [1][1] + board[1][2] === 'OOO')){
+    return true;
+  } else if ((board[2][0] + board [2][1] + board[2][2] === 'XXX') || (board[2][0] + board [2][1] + board[2][2] === 'OOO')) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function diagonalWin() {
-  // Your code here
+  if ((board[0][0] + board [1][1] + board[2][2] === 'XXX') || (board[0][0] + board [1][1] + board[2][2] === 'OOO')) {
+    return true;
+  } else if ((board[2][0] + board [1][1] + board[2][0] === 'XXX') || (board[2][0] + board [1][1] + board[2][0] === 'OOO')){
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function checkForWin() {
-  // Your code here
+  if (horizontalWin() || verticalWin() || diagonalWin()) {
+    return true;
+  }
 }
 
 function ticTacToe(row, column) {
-  // Your code here
+  let newRow = row.substr(0, 1);
+  let newColumn = column.substr(0, 1);
+  if ((board[newRow][newColumn] === 'X') || board[newRow][newColumn] === 'O') {
+    console.log('Move taken.')
+  } else {
+    board[newRow][newColumn] = playerTurn;
+    if (playerTurn === 'X') {
+      playerTurn = 'O';
+    } else {
+      playerTurn = 'X';
+    }
+  }
+  if (checkForWin()) {
+    console.log('Winner!');
+    clearBoard();
+  }
 }
+
+
 
 function getPrompt() {
   printBoard();
