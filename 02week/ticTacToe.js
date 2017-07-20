@@ -12,10 +12,9 @@ let board = [
   [' ', ' ', ' ']
 ];
 
-
 let playerTurn = 'X';
 
-function printBoard() {
+function printBoard () {
   console.log('   0  1  2');
   console.log('0 ' + board[0].join(' | '));
   console.log('  ---------');
@@ -23,7 +22,7 @@ function printBoard() {
   console.log('  ---------');
   console.log('2 ' + board[2].join(' | '));
 }
-function clearBoard() {
+function clearBoard () {
   board = [
     [' ', ' ', ' '],
     [' ', ' ', ' '],
@@ -31,53 +30,55 @@ function clearBoard() {
   ];
 }
 
-function horizontalWin() {
-  if ((board[0] === ['X', 'X', 'X']) || (board[0] === ['O', 'O', 'O'])) {
+function horizontalWin () {
+  if ((board[0][0] + board[0][1] + board[0][2] === 'XXX') || (board[0][0] + board[0][1] + board[0][2] === 'OOO')) {
     return true;
-  } else if ((board[1] === ['X', 'X', 'X']) || (board[1] === ['O', 'O', 'O'])) {
+  } else if ((board[1][0] + board[1][1] + board[1][2] === 'XXX') || (board[1][0] + board[1][1] + board[1][2] === 'OOO')) {
     return true;
-  } else if ((board[2] === ['X', 'X', 'X']) || (board[2] === ['O', 'O', 'O'])) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function verticalWin() {
-  if ((board[0][0] + board [0][1] + board[0][2] === 'XXX') || (board[0][0] + board [0][1] + board[0][2] === 'OOO')) {
-    return true;
-  } else if ((board[1][0] + board [1][1] + board[1][2] === 'XXX') || (board[1][0] + board [1][1] + board[1][2] === 'OOO')){
-    return true;
-  } else if ((board[2][0] + board [2][1] + board[2][2] === 'XXX') || (board[2][0] + board [2][1] + board[2][2] === 'OOO')) {
+  } else if ((board[2][0] + board[2][1] + board[2][2] === 'XXX') || (board[2][0] + board[2][1] + board[2][2] === 'OOO')) {
     return true;
   } else {
     return false;
   }
 }
 
-function diagonalWin() {
-  if ((board[0][0] + board [1][1] + board[2][2] === 'XXX') || (board[0][0] + board [1][1] + board[2][2] === 'OOO')) {
+function verticalWin () {
+  if ((board[0][0] + board[1][0] + board[2][0] === 'XXX') || (board[0][0] + board[1][1] + board[1][2] === 'OOO')) {
     return true;
-  } else if ((board[2][0] + board [1][1] + board[2][0] === 'XXX') || (board[2][0] + board [1][1] + board[2][0] === 'OOO')){
+  } else if ((board[0][1] + board[1][1] + board[2][1] === 'XXX') || (board[0][1] + board[1][1] + board[2][1] === 'OOO')) {
+    return true;
+  } else if ((board[0][2] + board[1][2] + board[2][2] === 'XXX') || (board[0][2] + board[1][2] + board[2][2] === 'OOO')) {
     return true;
   } else {
     return false;
   }
 }
 
-function checkForWin() {
+function diagonalWin () {
+  if ((board[0][0] + board[1][1] + board[2][2] === 'XXX') || (board[0][0] + board[1][1] + board[2][2] === 'OOO')) {
+    return true;
+  } else if ((board[2][0] + board[1][1] + board[2][0] === 'XXX') || (board[2][0] + board[1][1] + board[2][0] === 'OOO')) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function checkForWin () {
   if (horizontalWin() || verticalWin() || diagonalWin()) {
     return true;
   }
 }
 
-function ticTacToe(row, column) {
-  let newRow = row.substr(0, 1);
-  let newColumn = column.substr(0, 1);
-  if ((board[newRow][newColumn] === 'X') || board[newRow][newColumn] === 'O') {
-    console.log('Move taken.')
+function ticTacToe (row, column) {
+  /* This is to reduce the input to one character
+  let newRow = row.slice(0, 1);
+  let newColumn = column.slice(0, 1);
+  */
+  if ((board[row][column] === 'X') || board[row][column] === 'O') {
+    console.log('Move taken.');
   } else {
-    board[newRow][newColumn] = playerTurn;
+    board[row][column] = playerTurn;
     if (playerTurn === 'X') {
       playerTurn = 'O';
     } else {
@@ -90,9 +91,7 @@ function ticTacToe(row, column) {
   }
 }
 
-
-
-function getPrompt() {
+function getPrompt () {
   printBoard();
   console.log("It's Player " + playerTurn + "'s turn.");
   rl.question('row: ', (row) => {
@@ -101,10 +100,7 @@ function getPrompt() {
       getPrompt();
     });
   });
-
 }
-
-
 
 // Tests
 
