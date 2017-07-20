@@ -69,7 +69,81 @@ function checkForWin () {
     return true;
   }
 }
-
+// computerTurn makes O play as random
+function computerTurn () {
+  let computerMove = Math.floor(Math.random() * 9) + 1;
+  switch (computerMove) {
+    case 1:
+      if (board[0][0] !== ('X' || 'O')) {
+        board[0][0] = playerTurn;
+      } else {
+        computerTurn();
+      }
+      break;
+    case 2:
+      if (board[0][1] !== ('X' || 'O')) {
+        board[0][1] = playerTurn;
+      } else {
+        computerTurn();
+      }
+      break;
+    case 3:
+      if (board[0][2] !== ('X' || 'O')) {
+        board[0][2] = playerTurn;
+      } else {
+        computerTurn();
+      }
+      break;
+    case 4:
+      if (board[1][0] !== ('X' || 'O')) {
+        board[1][0] = playerTurn;
+        playerTurn = 'X';
+      } else {
+        computerTurn();
+      }
+      break;
+    case 5:
+      if (board[1][1] !== ('X' || 'O')) {
+        board[1][1] = playerTurn;
+        playerTurn = 'X';
+      } else {
+        computerTurn();
+      }
+      break;
+    case 6:
+      if (board[1][2] !== ('X' || 'O')) {
+        board[1][2] = playerTurn;
+        playerTurn = 'X';
+      } else {
+        computerTurn();
+      }
+      break;
+    case 7:
+      if (board[2][0] !== ('X' || 'O')) {
+        board[2][0] = playerTurn;
+        playerTurn = 'X';
+      } else {
+        computerTurn();
+      }
+      break;
+    case 8:
+      if (board[2][1] !== ('X' || 'O')) {
+        board[2][1] = playerTurn;
+        playerTurn = 'X';
+      } else {
+        computerTurn();
+      }
+      break;
+    case 9:
+      if (board[2][2] !== ('X' || 'O')) {
+        board[2][2] = playerTurn;
+        playerTurn = 'X';
+      } else {
+        computerTurn();
+      }
+      break;
+  }
+}
 function ticTacToe (row, column) {
   /* This is to reduce the input to one character
   let newRow = row.slice(0, 1);
@@ -79,11 +153,7 @@ function ticTacToe (row, column) {
     console.log('Move taken.');
   } else {
     board[row][column] = playerTurn;
-    if (playerTurn === 'X') {
-      playerTurn = 'O';
-    } else {
-      playerTurn = 'X';
-    }
+    playerTurn = 'O';
   }
   if (checkForWin()) {
     console.log('Winner!');
@@ -94,12 +164,17 @@ function ticTacToe (row, column) {
 function getPrompt () {
   printBoard();
   console.log("It's Player " + playerTurn + "'s turn.");
-  rl.question('row: ', (row) => {
-    rl.question('column: ', (column) => {
-      ticTacToe(row, column);
-      getPrompt();
+  if (playerTurn === 'X') {
+    rl.question('row: ', (row) => {
+      rl.question('column: ', (column) => {
+        ticTacToe(row, column);
+        getPrompt();
+      });
     });
-  });
+  } else {
+    computerTurn();
+    getPrompt();
+  }
 }
 
 // Tests
