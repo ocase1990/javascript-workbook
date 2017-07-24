@@ -7,6 +7,9 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+let lastStack1;
+let lastStack2;
+
 let stacks = {
   a: [4, 3, 2, 1],
   b: [],
@@ -24,8 +27,16 @@ function movePiece() {
 
 }
 
-function isLegal() {
-  // Your code here
+function isLegal(startStack, endStack) {
+  if ((!endStack) && (startStack)) {
+    console.log('true');
+    return true;
+  } else if (startStack[startStack.length - 1] > endStack[endStack.length - 1]) {
+    console.log('true');
+    return true;
+  } else {
+    return false;
+  }
 
 }
 
@@ -35,8 +46,26 @@ function checkForWin() {
 }
 
 function towersOfHanoi(startStack, endStack) {
-  // Your code here
+  /*
+  if (startStack === 'a') {startStack = stacks.a;}
+  else if (startStack === 'b') {startStack = stacks.b;}
+  else if (startStack === 'c') {startStack = stacks.c;}
 
+  if (endStack === 'a') {endStack = stacks.a;}
+  else if (endStack === 'b') {endStack = stacks.b;}
+  else if (endStack === 'c') {endStack = stacks.c;}
+*/
+
+  if (isLegal(startStack, endStack)) {
+    movePiece();
+    if (checkForWin()) {
+      console.log("Winner!");
+    } else {
+      getPrompt();
+    }
+  } else {
+    getPrompt();
+  }
 }
 
 function getPrompt() {
