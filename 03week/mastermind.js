@@ -31,13 +31,35 @@ function getRandomInt(min, max) {
 function generateHint(guess) {
   let correctLetters = 0;
   let wrongPositions = 0;
+  let duplicateCounter = 0;
+
+  if (guess === solution) {
+    return 'You guessed it!';
+  }
   // guess    aabb
   // solution abcd
+
+  if (guess[0] === guess[1]) {
+    duplicateCounter = duplicateCounter + 1;
+  } else if (guess[0] === guess[2]) {
+    duplicateCounter = duplicateCounter + 1;
+  } else if (guess[0] === guess[3]) {
+    duplicateCounter = duplicateCounter + 1;
+  }
+
+  if (guess[1] === guess[2]) {
+    duplicateCounter = duplicateCounter + 1;
+  } else if (guess[1] === guess[3]) {
+    duplicateCounter = duplicateCounter + 1;
+  }
+
+  if (guess[2] === guess[3]) {
+    duplicateCounter = duplicateCounter + 1;
+  }
 
   for (let i = 0; i < 4; i++) {
     if (guess[i] === solution[i]) {
       correctLetters = correctLetters + 1;
-      wrongPositions = wrongPositions - 1;
     } else {
       for (let j = 0; j < 4; j++) {
         if (guess[i] === solution[j]) {
@@ -46,20 +68,17 @@ function generateHint(guess) {
       }
     }
   }
-  wrongPositions = (wrongPositions - correctLetters);
+  wrongPositions = (wrongPositions - duplicateCounter);
   if (wrongPositions < 0) {
     wrongPositions = 0;
   }
   return `${correctLetters}-${wrongPositions}`;
 }
 
-function mastermind(guess) {
-  //solution = 'abcd'; // Comment this out to generate a random solution
-  console.log(solution);
-  console.log(generateHint(guess));
-  if (guess === solution) {
-    console.log('You guessed it!');
-  }
+function mastermind (guess) {
+  // solution = 'abcd'; // Comment this out to generate a random solution
+  guess = guess.toLowerCase().trim();
+  return generateHint(guess);
 }
 
 function getPrompt() {
