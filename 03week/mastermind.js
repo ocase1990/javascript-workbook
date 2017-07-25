@@ -34,6 +34,7 @@ function generateHint(guess) {
   for (let i = 0; i < 4; i++) {
     if (guess[i] === solution[i]) {
       correctLetters = correctLetters + 1;
+      wrongPositions = wrongPositions - 1;
     } else {
       for (let j = 0; j < 4; j++) {
         if (guess[i] === solution[j]) {
@@ -42,6 +43,7 @@ function generateHint(guess) {
       }
     }
   }
+  wrongPositions = (wrongPositions - correctLetters);
   return `${correctLetters}-${wrongPositions}`;
 }
 
