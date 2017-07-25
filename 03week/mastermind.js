@@ -31,6 +31,9 @@ function getRandomInt(min, max) {
 function generateHint(guess) {
   let correctLetters = 0;
   let wrongPositions = 0;
+  // guess    aabb
+  // solution abcd
+
   for (let i = 0; i < 4; i++) {
     if (guess[i] === solution[i]) {
       correctLetters = correctLetters + 1;
@@ -44,12 +47,14 @@ function generateHint(guess) {
     }
   }
   wrongPositions = (wrongPositions - correctLetters);
+  if (wrongPositions < 0) {
+    wrongPositions = 0;
+  }
   return `${correctLetters}-${wrongPositions}`;
 }
 
 function mastermind(guess) {
-  solution = 'abcd'; // Comment this out to generate a random solution
-  // your code here
+  //solution = 'abcd'; // Comment this out to generate a random solution
   console.log(solution);
   console.log(generateHint(guess));
   if (guess === solution) {
