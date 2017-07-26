@@ -11,24 +11,24 @@ let board = [];
 let solution = '';
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-function printBoard() {
+function printBoard () {
   for (let i = 0; i < board.length; i++) {
-    console.log(board[i]);
+    console.log('Previous guesses: ' + board[i]);
   }
 }
 
-function generateSolution() {
+function generateSolution () {
   for (let i = 0; i < 4; i++) {
     const randomIndex = getRandomInt(0, letters.length);
     solution += letters[randomIndex];
   }
 }
 
-function getRandomInt(min, max) {
+function getRandomInt (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function generateHint(guess) {
+function generateHint (guess) {
   let correctLetters = 0;
   let wrongPositions = 0;
   let duplicateCounter = 0;
@@ -40,21 +40,21 @@ function generateHint(guess) {
   // solution abcd
 
   if (guess[0] === guess[1]) {
-    duplicateCounter = duplicateCounter + 1;
+    ++duplicateCounter;
   } else if (guess[0] === guess[2]) {
-    duplicateCounter = duplicateCounter + 1;
+    ++duplicateCounter;
   } else if (guess[0] === guess[3]) {
-    duplicateCounter = duplicateCounter + 1;
+    ++duplicateCounter;
   }
 
   if (guess[1] === guess[2]) {
-    duplicateCounter = duplicateCounter + 1;
+    ++duplicateCounter;
   } else if (guess[1] === guess[3]) {
-    duplicateCounter = duplicateCounter + 1;
+    ++duplicateCounter;
   }
 
   if (guess[2] === guess[3]) {
-    duplicateCounter = duplicateCounter + 1;
+    ++duplicateCounter;
   }
   /*
   if ((guess[1] === guess[2]) && (guess[1] === guess[3])) {
@@ -64,7 +64,7 @@ function generateHint(guess) {
     ++duplicateCounter;
   }
 */
-  console.log(duplicateCounter);
+  // console.log(duplicateCounter);
 
   for (let i = 0; i < 4; i++) {
     if (guess[i] === solution[i]) {
@@ -75,29 +75,29 @@ function generateHint(guess) {
   }
 
   if (duplicateCounter >= correctLetters) {
-  wrongPositions = (wrongPositions - duplicateCounter);
+    wrongPositions = (wrongPositions - duplicateCounter);
   }
   if (correctLetters === 3) {
-  --wrongPositions;
+    --wrongPositions;
   }
 
   if (wrongPositions < 0) {
     wrongPositions = 0;
   }
 
-
   return `${correctLetters}-${wrongPositions}`;
 }
 
 function mastermind (guess) {
-  solution = 'abcd'; // Comment this out to generate a random solution
-  console.log(solution);
+  // solution = 'abcd'; // Comment this out to generate a random solution
+  board.push(guess);
+  // console.log(solution);
   guess = guess.toLowerCase().trim();
-  console.log(generateHint(guess));
+  console.log('Hint: ' + generateHint(guess));
   return generateHint(guess);
 }
 
-function getPrompt() {
+function getPrompt () {
   rl.question('guess: ', (guess) => {
     mastermind(guess);
     printBoard();
