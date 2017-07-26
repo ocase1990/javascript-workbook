@@ -56,28 +56,44 @@ function generateHint(guess) {
   if (guess[2] === guess[3]) {
     duplicateCounter = duplicateCounter + 1;
   }
+  /*
+  if ((guess[1] === guess[2]) && (guess[1] === guess[3])) {
+    --duplicateCounter;
+  }
+  if ((guess[0] === guess[1]) && (guess[0] === guess[2]) && (guess[0] === guess[3])) {
+    ++duplicateCounter;
+  }
+*/
+  console.log(duplicateCounter);
 
   for (let i = 0; i < 4; i++) {
     if (guess[i] === solution[i]) {
-      correctLetters = correctLetters + 1;
-    } else {
-      for (let j = 0; j < 4; j++) {
-        if (guess[i] === solution[j]) {
-          wrongPositions = wrongPositions + 1;
-        }
-      }
+      ++correctLetters;
+    } else if (guess[i] !== solution[i] && solution.includes(guess[i])) {
+      ++wrongPositions;
     }
   }
+
+  if (duplicateCounter >= correctLetters) {
   wrongPositions = (wrongPositions - duplicateCounter);
+  }
+  if (correctLetters === 3) {
+  --wrongPositions;
+  }
+
   if (wrongPositions < 0) {
     wrongPositions = 0;
   }
+
+
   return `${correctLetters}-${wrongPositions}`;
 }
 
 function mastermind (guess) {
-  // solution = 'abcd'; // Comment this out to generate a random solution
+  solution = 'abcd'; // Comment this out to generate a random solution
+  console.log(solution);
   guess = guess.toLowerCase().trim();
+  console.log(generateHint(guess));
   return generateHint(guess);
 }
 
