@@ -8,7 +8,7 @@ function forEach (arr, callback) {
   }
 }
 
-function map(arr, callback) {
+function map (arr, callback) {
   let newArr = [];
   for (let i = 0; i < arr.length; i++) {
     newArr.push(callback(arr[i]));
@@ -46,9 +46,8 @@ function every (arr, callback) {
 }
 
 if (typeof describe === 'function') {
-
   describe('#forEach()', () => {
-    it('should call the callback the array.length number of times', () => {
+    it ('should call the callback the array.length number of times', () => {
       let count = 0;
       forEach([1, 2, 3], () => {
         count++;
