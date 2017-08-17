@@ -33,18 +33,23 @@ document.addEventListener('DOMContentLoaded', () => {
       if ((qSelect[2].innerHTML === qSelect[4].innerHTML) && (qSelect[4].innerHTML === qSelect[6].innerHTML)) {
         alert(qSelect[4].innerHTML + "'s wins!'");
       }
-      debugger;
     }
     // horizontal win
     for (var i = 0; i < 9; i += 3) {
       if (qSelect[i].innerHTML) { // if there is an x or o in the square
-        if (((qSelect[i].innerHTML === qSelect[i + 1].innerHTML) && (qSelect[i + 1].innerHTML === qSelect[i + 2].innerHTML)) || // this line is for horizontal win
-        ((qSelect[i].innerHTML === qSelect[i + 3].innerHTML) && (qSelect[i + 3].innerHTML === qSelect[i + 6].innerHTML))) { // this line is for vertical win
+        if ((qSelect[i].innerHTML === qSelect[i + 1].innerHTML) && (qSelect[i + 1].innerHTML === qSelect[i + 2].innerHTML)) { // this line is for horizontal win
           alert(qSelect[i].innerHTML + "'s wins!'");
         }
       }
     }
-
+    // vertical win
+    for (let j = 0; j < 4; j++) {
+      if (qSelect[j].innerHTML) {
+        if ((qSelect[j].innerHTML === qSelect[j + 3].innerHTML) && (qSelect[j + 3].innerHTML === qSelect[j + 6].innerHTML)) { // this line is for vertical win
+          alert(qSelect[j].innerHTML + "'s wins!'");
+        }
+      }
+    }
 
 }
 
