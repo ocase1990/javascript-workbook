@@ -1,0 +1,25 @@
+[data-stack] {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 50px;
+  width: 300px;
+  background-color: darkgrey;
+  margin: 25px;
+}
+
+[data-block] {
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin: 2px;
+}
+
+[data-block="1"] {  background-color: blue; }
+[data-block="2"] { background-color: green; }
+[data-block="3"] { background-color: red; }
+[data-block="4"] { background-color: yellow; }
+[data-block="5"] { background-color: brown; }
+[data-block="6"] { background-color: orange; }
+[data-block="7"] { background-color: white; }
+[data-block="8"] { background-color: black; }
