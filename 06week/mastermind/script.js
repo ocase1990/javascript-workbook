@@ -1,15 +1,15 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-  let stack = document.querySelectorAll('[data-stack]');
-  let block = document.querySelectorAll('[data-block]');
+  var stack = document.querySelectorAll('[data-stack]');
+  var block = document.querySelectorAll('[data-block]');
   let moved = {};
   let currentColor = {};
   let currentGuess = [];
   let currentRow = 2;
   let solution = [];
   let solutionBlock = [];
-  // generateSolution
+  // generateSolution generates a random number solution -- each number associates with a color
   function generateSolution () {
     for (let i = 0; i < 4; i++) {
       solution += getRandomInt(1, 8);
@@ -22,20 +22,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   generateSolution();
 
-  document.querySelectorAll('[data-block]').forEach((block) => {
-    block.addEventListener('click', (e) => {
+  document.querySelectorAll('[data-block]').forEach((dataBlock) => {
+    dataBlock.addEventListener('click', (e) => {
       e.stopPropagation();
       moved = { target: e.target, size: e.target.attributes[0].value, parent: e.target.parentNode };
-      currentColor = moved.target.cloneNode(true);
+      console.log(parseInt(moved.parent.attributes[0].value));
+      if (parseInt(moved.parent.attributes[0].value) === 1) {
+        currentColor = moved.target.cloneNode(true);
+
+      } else {
+        moved.parent.removeChild(moved);
+      }
+
     });
   });
 
-  document.querySelectorAll('[data-stack]').forEach((stack) => {
-    stack.addEventListener('click', (e) => {
+  document.querySelectorAll('[data-stack]').forEach((dataStack) => {
+    dataStack.addEventListener('click', (e) => {
       if (currentRow === parseInt(e.target.attributes[0].value)) { // if selected stack is current stack then place piece
-        e.target.appendChild(currentColor);
-        currentGuess += currentColor.attributes[0].value;
-        console.log(currentGuess);
+        if(stack[currentRow - 1].children.length < 4) {
+          e.target.appendChild(currentColor);
+          currentColor = {};
+        }
       }
     });
   });
@@ -43,8 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('button').addEventListener('click', (e) => {
     checkAnswer();
   });
-
+  function getCurrentGuess() {
+    for (let i = 0; i < 4; i++) {
+      currentGuess += stack[currentRow - 1].children[i].attributes[0].value;
+    }
+  }
   function checkAnswer () {
+    getCurrentGuess();
+    console.log(currentGuess);
     if (currentGuess === solution) {
       let win = document.createTextNode('You Win!');
       stack[currentRow - 1].appendChild(win);
@@ -54,12 +68,49 @@ document.addEventListener('DOMContentLoaded', () => {
     currentRow++;
     currentGuess = [];
     if (currentRow === 12) {
+      console.log('solution display');
       displaySolution();
     }
   }
+  // display solution displays the solution generated at the beginning of the game after 10 guesses
   function displaySolution () {
-    stack[12].appendChild(stack[11]);
+    let solutionBlock = [];
+    for (let i = 0; i < 4; i++) {
+      solutionBlock[i] = document.createElement('DIV');
+      solutionBlock[i].style.width = '25px';
+      solutionBlock[i].style.height = '25px';
+      solutionBlock[i].style.float = 'left';
+      solutionBlock[i].style.margin = '2px';
+      switch (parseInt(solution[i])) { //switch statement for backgroundColor
+        case 1:
+        solutionBlock[i].style.backgroundColor = 'blue'
+        break;
+        case 2:
+        solutionBlock[i].style.backgroundColor = 'green'
+        break;
+        case 3:
+        solutionBlock[i].style.backgroundColor = 'red'
+        break;
+        case 4:
+        solutionBlock[i].style.backgroundColor = 'yellow'
+        break;
+        case 5:
+        solutionBlock[i].style.backgroundColor = 'brown'
+        break;
+        case 6:
+        solutionBlock[i].style.backgroundColor = 'orange'
+        break;
+        case 7:
+        solutionBlock[i].style.backgroundColor = '#FFFFFF'
+        break;
+        case 8:
+        solutionBlock[i].style.backgroundColor = '#000000'
+        break;
+      }
+      stack[11].appendChild(solutionBlock[i]);
+    }
   }
+  //generatehint generates a hint based on correct positions correct colors and correct colors wrong positions
   function generateHint (currentGuess) {
     let correctLetters = 0;
     let wrongPositions = 0;
@@ -106,8 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(duplicateCounter);
       }
     }
-  // 7714
-  // 1734
+
     if (duplicateCounter >= correctLetters) {
       wrongPositions = (wrongPositions - duplicateCounter);
     } else {
@@ -120,6 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (wrongPositions < 0) {
       wrongPositions = 0;
     }
+
+    // this section creates the black and white pegs for correct colors
     console.log(correctLetters + '-' + wrongPositions);
     let hintBox = document.createElement('DIV');
     hintBox.style.height = '25px';
